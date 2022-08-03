@@ -42,10 +42,10 @@ class MainActivity : AppCompatActivity() {
         connectToBtDevice()
 
         button.setOnClickListener {
-            btSocket!!.outputStream.write(editText.text.toString().toByteArray())
+            Log.d(TAG, "onCreate: ${editText.text}")
+            sendDataToBT(editText.text.toString())
         }
     }
-
 
     private fun connectToBtDevice() {
         val btAdapter = BluetoothAdapter.getDefaultAdapter()
@@ -83,5 +83,11 @@ class MainActivity : AppCompatActivity() {
         }else{
             //deny
         }
+    }
+
+    private fun sendDataToBT(signal: String) {
+        val ssidOutputStream: OutputStream = btSocket!!.outputStream
+        ssidOutputStream.write(signal.toByteArray())
+
     }
 }
