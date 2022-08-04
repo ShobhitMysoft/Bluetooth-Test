@@ -8,6 +8,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
@@ -164,8 +166,11 @@ class MainActivity : AppCompatActivity() {
     }*/
 
     private fun sendDataToBT(signal: String) {
-        val ssidOutputStream: OutputStream = btSocket!!.outputStream
-        ssidOutputStream.write(signal.toByteArray())
+//        val ssidOutputStream: OutputStream = btSocket!!.outputStream
+//        ssidOutputStream.write(signal.toByteArray())
+        btSocket?.let { it1 ->
+            MyBluetoothService(Handler(Looper.getMainLooper())).ConnectedThread(it1).write(signal.toByteArray())
+        }
 
     }
 }
